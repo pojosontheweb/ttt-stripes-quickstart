@@ -1,0 +1,14 @@
+idea-ttt-plugin.zip
+ttt-idea.zip
+lib
+gen
+out
+~*
+.DS_Store
+.idea
+target
+*.iml
+*~
+overlays
+*.ipr
+*.iws

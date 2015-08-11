@@ -1,0 +1,115 @@
+<%--
+    HTML page template to be used by the views.
+    Defines the global structure for all pages (nav etc).
+--%>
+<%@ page import="net.sourceforge.stripes.action.ActionBean" %>
+<%@ page import="com.acme.actions.BaseActionBean" %>
+<%@ page import="java.util.List" %>
+<%@ page import="net.sourceforge.stripes.action.LocalizableMessage" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Link" %>
+<%@ page import="com.acme.views.AcmePageBody" %>
+<%!
+        /**
+         * The title of the page
+         */
+        String pageTitle;
+
+        /**
+         * The action bean that handled the request for
+         * this page
+         */
+        BaseActionBean actionBean;
+
+        /**
+         * List of action bean classes to be used
+         * to render navigation links
+         */
+        List<Class<? extends ActionBean>> navBeanClasses;
+
+        /**
+         * Page body template
+         */
+        AcmePageBody body;
+%>
+<%
+    // init the Stripes tags
+    StripesTags s = new StripesTags(out);
+    String context = actionBean.getContext().getRequest().getContextPath();
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ACME online store, powered by Stripes and TTT">
+    <title>
+        ACME - <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="<%=context%>/css/layouts/blog-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="<%=context%>/css/layouts/blog.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" href="<%=s.url("/css/acme.css")%>">
+
+</head>
+<body>
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title">ACME Shop</h1>
+            <h2 class="brand-tagline">
+                <a href="http://www.stripesframework.org">Stripes</a>
+                +
+                <a href="https://github.com/pojosontheweb/ttt">TTT</a>
+                =
+                <a href="https://github.com/pojosontheweb/ttt/tree/master/stripes">\u2665</a></h2>
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <div class="navbar">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul>
+                        <%
+                            // create links for bean classes we want to navigate to
+                            Locale locale = actionBean.getContext().getLocale();
+                            for (Class<? extends ActionBean> beanClass : navBeanClasses) {
+                                boolean selected = actionBean.getClass().equals(beanClass);
+                                LocalizableMessage message = new LocalizableMessage(beanClass.getName() + ".nav");
+                                String liClass = "pure-menu-item" + (selected ? " pure-menu-selected" : "");
+                        %>
+                        <li class="<%=liClass%>">
+                            <% try (Link l = s.link(beanClass).set("class", "pure-menu-link")) { %>
+                            <%= message.getMessage(locale) %>
+                            <% } %>
+                        </li>
+                        <%
+                            }
+                        %>
+                    </ul>
+                </div>
+            </div>
+
+            <%= s.messages() %>
+
+            <%= body %>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<%@ page import="com.acme.model.Product" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.acme.model.Category" %>
+<%@ page import="com.acme.actions.ShopAction" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Form" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Submit" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page extends="com.acme.views.AcmePageBody" %>
+<%!
+    List<Product> products;
+%>
+<div class="posts">
+<%
+    StripesTags s = new StripesTags(out);
+    for (Product p : products) {
+        String name = s.format(p.getName());
+        String imageUrl = p.getImageUrl();
+        if (imageUrl == null) {
+            imageUrl = "https://placehold.it/48?text=N/A";
+        }
+        BigDecimal price = p.getPrice();
+        String priceLabel = price != null ? s.format(price, "currency") : "Free!";
+%>
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" alt="<%=name%>" height="48" width="48" src="<%=s.url(imageUrl)%>">
+            <h2 class="post-title"><%=name%></h2>
+            <p class="post-meta">
+                <span><%=priceLabel%></span>
+                <% for (Category category : p.getCategories()) { %>
+                    <span class="post-category post-category-<%=category%>" href="#"><%=category%></span>
+                <% } %>
+            </p>
+        </header>
+        <div class="post-description">
+            <%
+                try (Form f = s.form(ShopAction.class)) {
+                    String btnId = "add-product-" + p.getId();
+            %>
+                <%=s.format(p.getDescription())%>
+                <button id="<%=btnId%>" type="submit" name="buy" class="buy-btn pure-button">
+                    +
+                </button>
+                <input type="hidden" name="product" value="<%=p.getId()%>">
+            <%
+                }
+            %>
+        </div>
+    </section>
+
+<%
+    }
+%>
+</div>

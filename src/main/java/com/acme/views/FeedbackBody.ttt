@@ -1,0 +1,78 @@
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.acme.actions.FeedbackAction" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Form" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Select" %>
+<%@ page import="com.acme.actions.FeedbackType" %>
+<%@ page extends="com.acme.views.AcmePageBody" %>
+<%!
+
+
+%>
+<%
+    StripesTags s = new StripesTags(out);
+%>
+<h1>Feedback</h1>
+<p>
+    We are open to suggestions and comments about ACME.
+    Please use the form below to send us a note.
+    We read them all, of course...
+</p>
+<%= s.errors() %>
+<% try (Form f = s.form(FeedbackAction.class).set("class", "pure-form pure-form-aligned")) { %>
+
+    <fieldset>
+        <legend>Post your feedback</legend>
+
+        <div class="pure-control-group">
+            <%= s.label("type") %>
+            <% try (Select select = f.select("type")) { %>
+                <%= select.options(FeedbackType.class)%>
+            <% } %>
+        </div>
+
+        <div class="pure-control-group">
+            <%= s.label("email") %>
+            <%=
+                f.text("email")
+                    .set("placeholder", "Your email")
+                    .set("type", "email")
+                    .set("id", "email")
+                    .set("class", "pure-input-2-3")
+            %>
+        </div>
+
+        <div class="pure-control-group">
+            <%= s.label("subject") %>
+            <%=
+                f.text("subject")
+                    .set("placeholder", "Short description of the message")
+                    .set("id", "subject")
+                    .set("class", "pure-input-2-3")
+            %>
+        </div>
+
+        <div class="pure-control-group">
+            <%= s.label("message") %>
+            <%=
+                f.textarea("message")
+                        .set("placeholder", "Message text (optional)")
+                    .set("id", "message")
+                    .set("class", "pure-input-2-3")
+                    .set("rows", 10)
+            %>
+        </div>
+
+        <%-- TODO checkbox red border doesn't show up on error class --%>
+        <div class="pure-control-group">
+            <%= s.label("agreed") %>
+            <%= f.checkbox("agreed").set("id", "agreed") %>
+        </div>
+
+        <div class="pure-controls">
+            <%= f.submit("send").set("class", "pure-button pure-button-primary") %>
+            <%= f.submit("reset").set("class", "pure-button") %>
+        </div>
+
+    </fieldset>
+
+<% } %>

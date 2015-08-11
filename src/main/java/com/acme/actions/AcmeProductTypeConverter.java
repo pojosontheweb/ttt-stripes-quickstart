@@ -1,0 +1,32 @@
+package com.acme.actions;
+
+import com.acme.model.Product;
+import com.acme.model.ProductDao;
+import net.sourceforge.stripes.validation.TypeConverter;
+import net.sourceforge.stripes.validation.ValidationError;
+
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Optional;
+
+public class AcmeProductTypeConverter implements TypeConverter<Product> {
+
+	@Override
+	public void setLocale(Locale locale) {
+		// unused
+	}
+
+	@Override
+	public Product convert(String input, Class<? extends Product> targetType, Collection<ValidationError> errors) {
+		Long l = Long.parseLong(input);
+		if (l == null) {
+			return null;
+		}
+		Optional<Product> p = ProductDao.getInstance().getProduct(l);
+		if (p.isPresent()) {
+			return p.get();
+		}
+		return null;
+	}
+
+}

@@ -1,0 +1,48 @@
+.post-category.post-category-OpenSource {
+    background: #5aba59;
+}
+.post-category.post-category-Beach {
+    background: #4d85d1;
+}
+.post-category.post-category-Wear {
+    background: #8156a7;
+}
+.post-category.post-category-Travel {
+    background: #dfdb39;
+}
+.post-category.post-category-Awesome {
+    background: #df2d4f;
+}
+.post-category.post-category-Chill {
+    background: #3fd8df;
+}
+.post-category.post-category-Music {
+    background: #0a0a0a;
+}
+
+.post {
+    padding-bottom: 20px;
+}
+
+.buy-btn {
+    float: right;
+}
+
+.post-description {
+    margin-top: 10px;
+}
+
+.pure-form input.error {
+    border: 1px solid brown;
+}
+
+.navbar .pure-menu ul {
+    padding-left: 0;
+}
+
+ul.messages {
+    color: darkgreen;
+}
+
+
+

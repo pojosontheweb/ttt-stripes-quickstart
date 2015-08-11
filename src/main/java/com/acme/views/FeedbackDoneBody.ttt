@@ -1,0 +1,5 @@
+<%@ page extends="com.acme.views.AcmePageBody" %>
+<h1>Thank you !</h1>
+<p>
+    We wil handle your message shortly. Thank you for your contribution.
+</p>

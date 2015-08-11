@@ -1,0 +1,20 @@
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.acme.actions.ShopAction" %>
+<%@ page import="com.acme.actions.FeedbackAction" %>
+<%@ page extends="com.acme.views.AcmePageBody" %>
+<%
+    StripesTags s = new StripesTags(out);
+%>
+<h1>
+    Welcome to ACME Store !
+</h1>
+<p>
+    Hey, welcome to the ACME store. We hope you'll find what you need
+    in our <a href="<%=s.url(ShopAction.class)%>"> catalog</a>.
+</p>
+<p>
+    If not, please <a href="<%=s.url(FeedbackAction.class)%>">drop us a note</a>.
+</p>
+<p>
+    Happy shopping !
+</p>
