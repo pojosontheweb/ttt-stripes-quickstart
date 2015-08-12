@@ -1,14 +1,16 @@
 package com.acme.actions;
 
 import com.acme.views.HomeBody;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
 
+/**
+ * Home action, forwards to the home body template.
+ */
 @UrlBinding("/home")
 public class HomeAction extends BaseActionBean {
 
     @DefaultHandler
+	@DontBind
     public Resolution display() {
         return pageTemplate(new HomeBody());
     }

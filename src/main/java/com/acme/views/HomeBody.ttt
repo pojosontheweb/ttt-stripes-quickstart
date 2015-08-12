@@ -1,7 +1,6 @@
 <%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
 <%@ page import="com.acme.actions.ShopAction" %>
 <%@ page import="com.acme.actions.FeedbackAction" %>
-<%@ page extends="com.acme.views.AcmePageBody" %>
 <%
     StripesTags s = new StripesTags(out);
 %>

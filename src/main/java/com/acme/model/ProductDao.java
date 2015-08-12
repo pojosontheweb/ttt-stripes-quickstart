@@ -3,6 +3,9 @@ package com.acme.model;
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * Fictious DAO that creates a list of fake products at init.
+ */
 public class ProductDao {
 
     private final List<Product> products = new ArrayList<>();

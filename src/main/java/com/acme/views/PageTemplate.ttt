@@ -9,34 +9,28 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
 <%@ page import="com.pojosontheweb.ttt.stripes.Link" %>
-<%@ page import="com.acme.views.AcmePageBody" %>
+<%@ page import="com.pojosontheweb.ttt.ITemplate" %>
 <%!
-        /**
-         * The title of the page
-         */
-        String pageTitle;
+    /**
+     * the action bean that handled the request for this page
+     */
+    BaseActionBean actionBean;
 
-        /**
-         * The action bean that handled the request for
-         * this page
-         */
-        BaseActionBean actionBean;
+    /**
+     * the list of action bean classes to be used to render navigation links
+     */
+    List<Class<? extends ActionBean>> navBeanClasses;
 
-        /**
-         * List of action bean classes to be used
-         * to render navigation links
-         */
-        List<Class<? extends ActionBean>> navBeanClasses;
-
-        /**
-         * Page body template
-         */
-        AcmePageBody body;
+    /**
+     * the page body template
+     */
+    ITemplate body;
 %>
 <%
     // init the Stripes tags
     StripesTags s = new StripesTags(out);
     String context = actionBean.getContext().getRequest().getContextPath();
+    String pageTitle = s.message(actionBean.getClass().getName() + ".pageTitle");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,11 +64,11 @@
         <div class="header">
             <h1 class="brand-title">ACME Shop</h1>
             <h2 class="brand-tagline">
-                <a href="http://www.stripesframework.org">Stripes</a>
+                <a href="http://www.stripesframework.org" target="_blank">Stripes</a>
                 +
-                <a href="https://github.com/pojosontheweb/ttt">TTT</a>
+                <a href="https://github.com/pojosontheweb/ttt" target="_blank">TTT</a>
                 =
-                <a href="https://github.com/pojosontheweb/ttt/tree/master/stripes">\u2665</a></h2>
+                <a href="https://github.com/pojosontheweb/ttt/tree/master/stripes" target="_blank">\u2665</a></h2>
         </div>
     </div>
 
@@ -85,17 +79,19 @@
                     <ul>
                         <%
                             // create links for bean classes we want to navigate to
+                            // handling the selection state, based on the
+                            // currently displayed page (action)
                             Locale locale = actionBean.getContext().getLocale();
                             for (Class<? extends ActionBean> beanClass : navBeanClasses) {
                                 boolean selected = actionBean.getClass().equals(beanClass);
                                 LocalizableMessage message = new LocalizableMessage(beanClass.getName() + ".nav");
                                 String liClass = "pure-menu-item" + (selected ? " pure-menu-selected" : "");
                         %>
-                        <li class="<%=liClass%>">
-                            <% try (Link l = s.link(beanClass).set("class", "pure-menu-link")) { %>
-                            <%= message.getMessage(locale) %>
-                            <% } %>
-                        </li>
+                                <li class="<%=liClass%>">
+                                    <% try (Link l = s.link(beanClass).set("class", "pure-menu-link")) { %>
+                                        <%= message.getMessage(locale) %>
+                                    <% } %>
+                                </li>
                         <%
                             }
                         %>
@@ -103,9 +99,13 @@
                 </div>
             </div>
 
+            <%-- display stripes messages here (if any) --%>
             <%= s.messages() %>
 
-            <%= body %>
+            <%-- render the body template here --%>
+            <div class="acme-body">
+                <%= body %>
+            </div>
 
         </div>
     </div>

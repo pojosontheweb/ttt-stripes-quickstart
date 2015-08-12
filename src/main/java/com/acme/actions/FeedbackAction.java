@@ -5,6 +5,10 @@ import com.acme.views.FeedbackDoneBody;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.*;
 
+/**
+ * This action shows how to handle FORMs with the TTT Stripes tags.
+ * It's a regular Stripes FORM.
+ */
 @UrlBinding("/feedback")
 public class FeedbackAction extends BaseActionBean implements ValidationErrorHandler {
 
@@ -22,8 +26,11 @@ public class FeedbackAction extends BaseActionBean implements ValidationErrorHan
 
 	private boolean agreed = false;
 
+	/**
+	 * Display the feedback form.
+	 */
 	@DefaultHandler
-	@DontValidate
+	@DontBind
 	public Resolution display() {
 		return pageTemplate(new FeedbackBody());
 	}
@@ -38,16 +45,28 @@ public class FeedbackAction extends BaseActionBean implements ValidationErrorHan
 		return new RedirectResolution(getClass(), "sent");
 	}
 
-	@DontValidate
+	/**
+	 * Send the feedback (fake, does nothing except output
+	 * a message...)
+	 */
+	@DontBind
 	public Resolution sent() {
 		return pageTemplate(new FeedbackDoneBody());
 	}
 
+	/**
+	 * Reset the form
+	 * @return
+	 */
 	@DontBind
 	public Resolution reset() {
 		return new RedirectResolution(getClass());
 	}
 
+	/**
+	 * Custom validation method for the "I agree" checkbox
+	 * @param errors
+	 */
 	@ValidationMethod
 	public void validateAgreed(ValidationErrors errors) {
 		if (!agreed) {
@@ -55,10 +74,19 @@ public class FeedbackAction extends BaseActionBean implements ValidationErrorHan
 		}
 	}
 
+	/**
+	 * Needed because with TTT there ain't no source page...
+	 * Simply forwards to the default handler : this one must NOT
+	 * validate otherwise you'd go into an infinite loop...
+	 */
 	@Override
 	public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
 		return display();
 	}
+
+	//
+	// accessors/mutators
+	//
 
 	public String getEmail() {
 		return email;

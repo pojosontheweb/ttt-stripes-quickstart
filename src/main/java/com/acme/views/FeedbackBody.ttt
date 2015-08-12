@@ -3,11 +3,6 @@
 <%@ page import="com.pojosontheweb.ttt.stripes.Form" %>
 <%@ page import="com.pojosontheweb.ttt.stripes.Select" %>
 <%@ page import="com.acme.actions.FeedbackType" %>
-<%@ page extends="com.acme.views.AcmePageBody" %>
-<%!
-
-
-%>
 <%
     StripesTags s = new StripesTags(out);
 %>

@@ -44,5 +44,9 @@ ul.messages {
     color: darkgreen;
 }
 
+body {
+    overflow-y: scroll;
+}
+
 
 
