@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pojosontheweb</groupId>
     <artifactId>ttt-stripes-quickstart</artifactId>
-    <version>LATEST-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>	
     <dependencies>
 		<!-- we need Stripes+TTT of course... -->
         <dependency>
             <groupId>com.pojosontheweb</groupId>
             <artifactId>ttt-stripes</artifactId>
-            <version>LATEST-SNAPSHOT</version>
+            <version>0.1-beta4</version>
         </dependency>
 		<!-- for file uploads (optional) -->
         <dependency>
