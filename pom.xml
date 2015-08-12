@@ -6,13 +6,17 @@
     <groupId>com.pojosontheweb</groupId>
     <artifactId>ttt-stripes-quickstart</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>	
+    <packaging>war</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <ttt.version>0.1-beta5</ttt.version>
+    </properties>
     <dependencies>
 		<!-- we need Stripes+TTT of course... -->
         <dependency>
             <groupId>com.pojosontheweb</groupId>
             <artifactId>ttt-stripes</artifactId>
-            <version>0.1-beta4</version>
+            <version>${ttt.version}</version>
         </dependency>
 		<!-- for file uploads (optional) -->
         <dependency>
@@ -44,10 +48,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-	<properties>
-		<!-- everything is UTF-8 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <build>
         <plugins>
 			<!--
@@ -56,7 +56,7 @@
             <plugin>
                 <groupId>com.pojosontheweb</groupId>
                 <artifactId>ttt-maven-plugin</artifactId>
-                <version>${project.version}</version>
+                <version>${ttt.version}</version>
                 <executions>
                     <execution>
                         <id>ttt-compile</id>
@@ -82,6 +82,20 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.2.v20140723</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>8005</stopPort>
+                    <stopKey>STOP</stopKey>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
                 </configuration>
             </plugin>
         </plugins>
