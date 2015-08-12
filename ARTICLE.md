@@ -279,11 +279,11 @@ pay attention to is how you use the tags, particularly try/resource vs body-less
 ### Page Templating (layouts)
 
 The Stripes taglib provides layout tags (`stripes:layout`) that allows to create
-templates for pages or page fragments. Those are user to create the global page 
-layout which is reused in views. 
+templates for pages or page fragments. Those are used to create the global page 
+layouts that can be reused in views. 
 
 When using TTT, you don't need those tags. They are not provided by `StripesTags` because
-TTT has built-in capabilities for composition of templates.
+TTT has built-in composition/nesting capabilities.
 
 Let's say we want a global template to reuse in various pages, with an arbitrary content. 
 
@@ -308,6 +308,7 @@ Here's how we'd write the main, outer template (`MyPageTemplate.ttt`) :
 	...
 <head>
 <body>
+	<%-- render the body here --%>
 	<%= body %>
 </body>
 </html>
@@ -318,8 +319,8 @@ Our `MyPageTemplate` accepts two arguments :
 * `String pageTitle` a title for the page
 * `ITemplate body` the body of the page
 
-The `body` argument is a TTT templae itself (`ITemplate`), therefore, it gets 
-rendered when you use it in an expression, like `<%= body %>`.
+The `body` argument is a TTT template itself (`ITemplate`), therefore, it gets 
+rendered when you use it inside an expression block, like `<%= body %>`.
  
 We can now create full-blown pages by passing an arbitrary template to 
 our global `MyPageTemplate` :
@@ -327,16 +328,13 @@ our global `MyPageTemplate` :
 ```java
 MyTemplate body = new MyTemplate(foo);
 MyPageTemplate htmlPage = new MyPageTemplate("my page", body);
+return new TttResolution(htmlPage);
 ```
-
-Complex but modular pages can be created using TTT's built-in support 
-for composition.
 
 ## Conclusion
 
-Using TTT instead of JSP provides static-typed Views, bridging the gap that 
-exists between Controllers and Views in Stripes. It allows to write cleaner 
-code, and find bugs earlier. 
+Using TTT instead of JSP provides static-typed Views, bridging the gap between Controllers 
+and Views in Stripes. It allows to write cleaner code, and find bugs earlier. 
 
 The TTT/Stripes integration allows to write and render templates easily, with a 
 very low entry level and fast learning curve. Since it is all plain Java, there 
