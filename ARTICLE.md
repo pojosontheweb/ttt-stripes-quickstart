@@ -50,7 +50,7 @@ public class MyAction implements ActionBean {
 }
 ```
 
-Doesn't look bad, if you're used to it. But it is.
+Doesn't look bad, if you're used to it. But it actually is.
 
 The Action's event handler blindly forwards to a resource, without 
 any guarantee that it will be there. Also, there is no way to know 
