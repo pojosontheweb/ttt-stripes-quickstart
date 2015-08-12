@@ -276,6 +276,62 @@ Let's create another template with a Stripes FORM (`MyFormTemplate.ttt`) :
 As you see, you use the `StripesTags` class as an entry-point to the tags. The only thing to 
 pay attention to is how you use the tags, particularly try/resource vs body-less tags).
 
+### Page Templating (layouts)
+
+The Stripes taglib provides layout tags (`stripes:layout`) that allows to create
+templates for pages or page fragments. Those are user to create the global page 
+layout which is reused in views. 
+
+When using TTT, you don't need those tags. They are not provided by `StripesTags` because
+TTT has built-in capabilities for composition of templates.
+
+Let's say we want a global template to reuse in various pages, with an arbitrary content. 
+
+Here's how we'd write the main, outer template (`MyPageTemplate.ttt`) :
+
+```jsp
+<%!
+	/**
+	 * the title of the page
+	 */
+	String pageTitle;
+	
+	/**
+	 * the template to be used as a body
+	 */
+	ITemplate body;
+%>
+<html>
+<head>
+	<title><%= pageTitle %></title>
+	<link rel="stylesheet" ...>
+	...
+<head>
+<body>
+	<%= body %>
+</body>
+</html>
+```
+
+Our `MyPageTemplate` accepts two arguments :
+
+* `String pageTitle` a title for the page
+* `ITemplate body` the body of the page
+
+The `body` argument is a TTT templae itself (`ITemplate`), therefore, it gets 
+rendered when you use it in an expression, like `<%= body %>`.
+ 
+We can now create full-blown pages by passing an arbitrary template to 
+our global `MyPageTemplate` :
+
+```java
+MyTemplate body = new MyTemplate(foo);
+MyPageTemplate htmlPage = new MyPageTemplate("my page", body);
+```
+
+Complex but modular pages can be created using TTT's built-in support 
+for composition.
+
 ## Conclusion
 
 Using TTT instead of JSP provides static-typed Views, bridging the gap that 
