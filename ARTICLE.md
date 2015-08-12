@@ -266,7 +266,8 @@ Let's create another template with a Stripes FORM (`MyFormTemplate.ttt`) :
 	
 	...
 
-<% } // form closes here %>
+<%-- end of s:form --%>
+<% } %>
 	
 ...
 
