@@ -238,7 +238,7 @@ Let's create another template with a Stripes FORM (`MyFormTemplate.ttt`) :
 </h1>
 
 <%-- open a FORM for MyOtherAction --%>
-<% try ( Form f = stripes.form(MyOtherAction).set("class", "my-form") ) { %>
+<% try ( Form f = stripes.form(MyOtherAction.class).set("class", "my-form") ) { %>
 		
 	...
 		
