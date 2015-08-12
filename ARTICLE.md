@@ -133,7 +133,7 @@ Then, the `foo` argument is used in the template, in a scriptlet, between `<%=` 
 
 As you see, it really looks like a JSP, but it's not. 
 
-The template is compiled to an immutable Java class that has :
+The template is compiled (at design/build time) to an immutable Java class that has :
 
 * a unique constructor that accepts the arguments as defined in the template's signature
 * a `render(Writer out)` method that renders the template to the passed writer
