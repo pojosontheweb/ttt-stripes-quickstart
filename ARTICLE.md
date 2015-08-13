@@ -154,7 +154,7 @@ public class MyAction implements ActionBean {
 	
 	@DefaultHandler
 	public Resolution display() {
-		// create the template using required args
+		// create the template using required args 
 		MyTemplate myTemplate = new MyTemplate(getFoo());
 		// return a resolution to render it
 		return new TttResolution(myTemplate);
@@ -169,8 +169,11 @@ public class MyAction implements ActionBean {
 ```
 
 Instead of blindly forwarding to a JSP, the ActionBean is now linked  
-to the View at compile-time. It doesn't need to set any request attribute 
-or anything, it's plain Java.
+to the View at compile-time. The TTT compiler has generated a 
+`MyTemplate` class for us, which we can use directly in our 
+Controllers.
+
+It doesn't need to set any request attribute or anything, it's plain Java.
 
 ### Using the Stripes Tags
 
@@ -205,6 +208,9 @@ Let's use a `stripes:url` to add a hyperlink in our example (`MyTemplate.ttt`) :
 
 Pretty easy. We simply get an instance of `StripesTags`, and use methods on that 
 object that correspond to the tag we need. 
+
+> The `out` variable that is passed to the `StripesTags` constructor is the only implicit
+> variable that TTT provides. It's the `Writer` that the template renders to.
 
 Some more involved Stripes Tags accept a body, like `stripes:form`. Those 
 are used with try/resource blocks, in scriptlets. 
