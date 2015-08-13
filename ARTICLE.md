@@ -168,9 +168,8 @@ public class MyAction implements ActionBean {
 }
 ```
 
-Instead of blindly forwarding to a JSP, the ActionBean is now linked  
-to the View at compile-time. The TTT compiler has generated a 
-`MyTemplate` class for us, which we can use directly in our 
+Instead of blindly forwarding to a JSP, the ActionBean is now linked to the View at compile-time. 
+The TTT compiler has generated a `MyTemplate` class for us, which we can use directly in our 
 Controllers.
 
 It doesn't need to set any request attribute or anything, it's plain Java.
