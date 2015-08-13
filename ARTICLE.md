@@ -18,14 +18,14 @@ When using a MVC framework, a typical request handling flow goes like this :
 2. the View handles the rendering of the data
  
 With most of the Java MVCs, the link between the Controller and the View is 
-"loose-typed" : the Controller is not linked to the View at compile-time, 
-and the View gets its data from a loose-typed, map-style structure. There 
+"weakly-typed" : the Controller is not linked to the View at compile-time, 
+and the View gets its data from a weakly-typed, map-style structure. There 
 is a gap between Controller and View, that the compiler cannot help to fill.
 
 This makes for bug-prone code, as you cannot detect errors at compile-time, 
 and instead get runtime exceptions.
 
-## JSP : The Loose-typed Way
+## JSP : The Weakly-Typed Way
 
 Let's illustrate the problem, using Stripes, and plain JSP.
  
