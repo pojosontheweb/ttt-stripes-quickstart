@@ -18,14 +18,14 @@ When using a MVC framework, a typical request handling flow goes like this :
 2. the View handles the rendering of the data
  
 With most of the Java MVCs, the link between the Controller and the View is 
-"loose-typed" : the Controller is not linked to the View at compile-time, 
-and the View gets its data from a loose-typed, map-style structure. There 
+"weakly-typed" : the Controller is not linked to the View at compile-time, 
+and the View gets its data from a weakly-typed, map-style structure. There 
 is a gap between Controller and View, that the compiler cannot help to fill.
 
 This makes for bug-prone code, as you cannot detect errors at compile-time, 
 and instead get runtime exceptions.
 
-## JSP : The Loose-typed Way
+## JSP : The Weakly-Typed Way
 
 Let's illustrate the problem, using Stripes, and plain JSP.
  
@@ -154,7 +154,7 @@ public class MyAction implements ActionBean {
 	
 	@DefaultHandler
 	public Resolution display() {
-		// create the template using required args
+		// create the template using required args 
 		MyTemplate myTemplate = new MyTemplate(getFoo());
 		// return a resolution to render it
 		return new TttResolution(myTemplate);
@@ -168,9 +168,11 @@ public class MyAction implements ActionBean {
 }
 ```
 
-Instead of blindly forwarding to a JSP, the ActionBean is now linked  
-to the View at compile-time. It doesn't need to set any request attribute 
-or anything, it's plain Java.
+Instead of blindly forwarding to a JSP, the ActionBean is now linked to the View at compile-time. 
+The TTT compiler has generated a `MyTemplate` class for us, which we can use directly in our 
+Controllers.
+
+It doesn't need to set any request attribute or anything, it's plain Java.
 
 ### Using the Stripes Tags
 
@@ -205,6 +207,9 @@ Let's use a `stripes:url` to add a hyperlink in our example (`MyTemplate.ttt`) :
 
 Pretty easy. We simply get an instance of `StripesTags`, and use methods on that 
 object that correspond to the tag we need. 
+
+> The `out` variable that is passed to the `StripesTags` constructor is the only implicit
+> variable that TTT provides. It's the `Writer` that the template renders to.
 
 Some more involved Stripes Tags accept a body, like `stripes:form`. Those 
 are used with try/resource blocks, in scriptlets. 
