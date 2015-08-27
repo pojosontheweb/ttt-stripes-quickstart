@@ -1,6 +1,7 @@
 package com.acme.actions;
 
 import com.acme.views.FeedbackBody;
+import com.acme.views.FeedbackBody2;
 import com.acme.views.FeedbackDoneBody;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.*;

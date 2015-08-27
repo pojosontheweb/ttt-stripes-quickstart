@@ -1,0 +1,58 @@
+<%@ page import="com.acme.views.purecss.PureGroup" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Form" %>
+<%@ page import="net.sourceforge.stripes.action.ActionBean" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Submit" %>
+<%@ page import="java.util.function.Function" %>
+<%@ page import="net.sourceforge.stripes.validation.ValidationMetadataProvider" %>
+<%@ page import="net.sourceforge.stripes.controller.StripesFilter" %>
+<%@ page import="net.sourceforge.stripes.controller.ParameterName" %>
+<%@ page import="net.sourceforge.stripes.validation.ValidationMetadata" %>
+<%!
+    Class<? extends ActionBean> beanClass;
+    String legend;
+    List<PureGroup> groups;
+    List<Function> controls;
+%>
+<%
+    StripesTags stripes = new StripesTags(out);
+%>
+<% try ( Form f = stripes.form(beanClass).set("class", "pure-form pure-form-aligned") ) { %>
+    <fieldset>
+    <% if (legend != null) { %>
+        <legend><%=legend%></legend>
+    <% } %>
+    <%
+        for (PureGroup group : groups) {
+            String name = group.getName();
+            ValidationMetadataProvider vmp = StripesFilter.getConfiguration().getValidationMetadataProvider();
+            ValidationMetadata validationMetadata = vmp.getValidationMetadata(beanClass, new ParameterName(name));
+    %>
+        <div class="pure-control-group">
+            <%= stripes.label(name) %>
+            <%= group.apply(f) %>
+            <% if (validationMetadata!= null && validationMetadata.required()) { %> * <% } %>
+        </div>
+    <%
+        }
+    %>
+    <% if (controls != null) { %>
+        <div class="pure-controls">
+            <%
+                boolean firstControlDone = false;
+                for (Function<Form,Submit> control : controls) {
+                    String cssClass = " pure-button";
+                    if (!firstControlDone) {
+                        cssClass += " pure-button-primary";
+                        firstControlDone = true;
+                    }
+                    Submit s = control.apply(f);
+                    s.set("class", s.getTag().getCssClass() + cssClass);
+            %>
+                <%= s %>
+            <% } %>
+        </div>
+    <% } %>
+    </fieldset>
+<% }%>

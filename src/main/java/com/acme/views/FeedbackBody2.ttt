@@ -1,0 +1,52 @@
+<%@ page import="com.pojosontheweb.ttt.stripes.StripesTags" %>
+<%@ page import="com.acme.actions.FeedbackAction" %>
+<%@ page import="com.acme.views.purecss.PureCss" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Select" %>
+<%@ page import="com.acme.actions.FeedbackType" %>
+<%@ page import="com.pojosontheweb.ttt.stripes.Form" %>
+<%
+    StripesTags s = new StripesTags(out);
+%>
+<h1>Feedback</h1>
+
+<p>
+    We are open to suggestions and comments about ACME.
+    Please use the form below to send us a note.
+    We read them all, of course...
+</p>
+
+<%= s.errors() %>
+
+<%=
+PureCss.form( FeedbackAction.class )
+        .setLegend( "Post your feedback" )
+        .group( "type", (form, name) -> {
+                // body tags must be rendered explicitly...
+                try (Select select = form.select(name)) {
+                    select.options(FeedbackType.class).render(out);
+                    return select;
+                }
+            }
+        )
+        .group( "email", (form, name) ->
+            form.text(name)
+                .set("placeholder", "Your email")
+                .set("type", "email")
+                .set("class", "pure-input-2-3")
+        )
+        .group( "subject", (form, name) ->
+            form.text(name)
+                .set("placeholder", "Short description of the message")
+                .set("class", "pure-input-2-3")
+        )
+        .group( "message", (form, name) ->
+            form.textarea(name)
+                .set("placeholder", "Message text (optional)")
+                .set("class", "pure-input-2-3")
+                .set("rows", 10)
+        )
+        .group( "agreed", Form::checkbox )
+        .control( form -> form.submit("send") )
+        .control( form -> form.submit("reset") )
+        .build()
+%>
